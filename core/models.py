@@ -14,5 +14,5 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
     
-#after create this,to find it from the admin panel i have to register it to admin .py
+#after i create this table,to find it from the admin panel in my site i have to register it to admin .py
 
