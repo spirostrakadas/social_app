@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model 
 #ready user model from django
+import uuid
+from datetime import datetime
 User=get_user_model() 
 
 # Create your models here.
@@ -16,3 +18,14 @@ class Profile(models.Model):
     
 #after i create this table,to find it from the admin panel in my site i have to register it to admin .py
 
+class Post(models.Model):
+    id=models.UUIDField(primary_key=True,default=uuid.uuid4)
+    user=models.CharField(max_length=100)
+    image=models.ImageField(upload_to='post_images')
+    caption=models.TextField(max_length=300)
+    created_at=models.DateTimeField(default=datetime.now)
+    number_of_likes=models.IntegerField(default=0)
+
+
+    def __str__(self) -> str:
+        return self.user
