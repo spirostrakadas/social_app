@@ -98,4 +98,6 @@ def settings(request):
 
     return render(request,'settings.html',{'user_profile':user_profile})
 
-#2:15
+@login_required
+def upload(request):
+    return HttpResponse('<h1>upload</h1>')

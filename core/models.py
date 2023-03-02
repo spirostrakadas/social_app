@@ -27,5 +27,5 @@ class Post(models.Model):
     number_of_likes=models.IntegerField(default=0)
 
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.user
