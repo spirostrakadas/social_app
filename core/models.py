@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 #ready user model from django
 import uuid
 from datetime import datetime
+#when you create a table an you want to see it in the admin panel you hate to register it at admin.py
 User=get_user_model() 
 
 # Create your models here.
@@ -29,3 +30,10 @@ class Post(models.Model):
 
     def __str__(self):
         return self.user
+    
+class LikePost(models.Model):
+    post_id=models.CharField(max_length=500)
+    username=models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.username
