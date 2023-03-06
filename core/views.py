@@ -11,7 +11,8 @@ def index(request):
     user_object=User.objects.get(username=request.user.username)
     user_profile=Profile.objects.get(user=user_object)
     post=Post.objects.all()
-    return  render(request,'index.html',{'user_profile':user_profile,"post":post})
+    posts=Post.objects.all()
+    return  render(request,'index.html',{'user_profile':user_profile,"post":post,'posts':posts})
 
 
 
@@ -103,11 +104,11 @@ def settings(request):
 
     return render(request,'settings.html',{'user_profile':user_profile})
 
-@login_required
+@login_required(login_url='signin')
 def upload(request):
     if request.method=="POST":
         user=request.user.username
-        image=request.FILES.get('image_upload')
+        image=request.FILES.get('image_upload')#action='image_upload' in the html template!
         caption=request.POST['caption']
 
         new_post=Post.objects.create(user=user,image=image,caption=caption)
@@ -115,4 +116,4 @@ def upload(request):
         return redirect("/")
     else:
         return redirect('/')
-    return HttpResponse('<h1>upload</h1>')
+
