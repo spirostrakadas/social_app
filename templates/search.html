@@ -7,8 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{% static 'favicon.png' %}" rel="icon" type="image/png">
-    <title>Home</title>
+    <link href="favicon.png" rel="icon" type="image/png">
+    <title>Search</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'assets/css/icons.css' %}">
@@ -16,22 +16,18 @@
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/tailwind.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
-    
 </head>
 
 <body>
-
-            <header>
+            <form action="search" method="POST">
+            {% csrf_token %}
+            <header style="margin-top: -23px;">
                 <div class="header_inner">
-                    
-                    <form action="/search" method="POST">
-                    {% csrf_token %}
                     <div class="left-side">
                         <!-- Logo -->
                         <div id="logo" class=" uk-hidden@s">
-                            <a href="home.html">
-                                <b><h1 style="text-transform: uppercase;">Social Book</h1></b>
+                            <a href="/">
+                                <!-- <b><h1 style="text-transform: uppercase;">Social Book</h1></b> -->
                             </a>
                         </div>
 
@@ -40,26 +36,38 @@
                         </div>-->
 
                         <!-- <div class="header_search"> -->
-                            <input type="text" name="username" placeholder="Search for username..">&nbsp; &nbsp;
-                            <button type="submit"><i class="fa fa-search fa-1x"></i></button>
+                            
+                                <input type="text" name="username" placeholder="Search for username..">&nbsp; &nbsp;
+                                <button type="submit"><i class="fa fa-search fa-1x"></i></button>
+                            
+                            <!-- <div class="icon-search">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div> -->
                         <!-- </div> -->
 
                     </div>
-                    </form>
-                </form>
                     <div class="right-side lg:pr-4">
+                        <!-- welcome user -->
+                        <a href="#" class="">
+                            Welcome <b name="" class="">{{user.username}}&nbsp; &nbsp; &nbsp;</b>
+                        </a>
+
                          <!-- upload -->
                         <a href="#"
                             class="bg-pink-500 flex font-bold hidden hover:bg-pink-600 hover:text-white inline-block items-center lg:block max-h-10 mr-4 px-4 py-2 rounded shado text-white">
                             <ion-icon name="add-circle" class="-mb-1
-                             mr-1 opacity-90 text-xl uilus-circle"></ion-icon> Upload Pics
+                             mr-1 opacity-90 text-xl uilus-circle"></ion-icon> New Post
                         </a>
                          <!-- upload dropdown box -->
                         <div uk-dropdown="pos: top-right;mode:click ; animation: uk-animation-slide-bottom-small" class="header_dropdown">
     
                             <!-- notivication header -->
                             <div class="px-4 py-3 -mx-5 -mt-4 mb-5 border-b">
-                                <h4>Upload Pics</h4>
+                                <h4>Upload Pics or Videos</h4>
                             </div>
     
                             <!-- notification contents -->
@@ -74,22 +82,16 @@
                                         </svg>
                                     </div>
 
-                                    <form action="upload" method="POST" enctype="multipart/form-data" >
-                                    {% csrf_token %}
-                                    <p class="my-3 leading-6"> Upload pics
+                                    <p class="my-3 leading-6"> Upload pics ..
                                     </p>
-                                    <div>
-                                        <input type="file" name="image_upload">
-                                        <!-- <a href="#" class="button soft-warning small"> Choose file</a> -->
-                                        <textarea class="button soft-warning small" name="caption" placeholder="caption..." ></textarea>
-                                        <br>
-                                        <button class="button bg-blue-700" type="submit" >Upload</button>
+                                    <div uk-form-custom>
+                                        <input type="file">
+                                        <a href="#" class="button soft-warning small"> Choose pics</a>
                                     </div>
-                                    </form>
-
-                                    <!-- <a href="#" class="uk-text-muted mt-3 uk-link"
+    
+                                    <a href="#" class="uk-text-muted mt-3 uk-link"
                                         uk-toggle="target: .choose-upload ;  animation: uk-animation-slide-right-small, uk-animation-slide-left-medium; queued: true">
-                                        Or Import Video </a> -->
+                                        <!--Or Import Video--> </a>
                                 </div>
     
                                 <div class="uk-flex uk-flex-column choose-upload" hidden>
@@ -113,13 +115,13 @@
     
                             </div>
                             <div class="px-4 py-3 -mx-5 -mb-4 mt-5 border-t text-sm">
-                                Your Image size Must be Maxmium 999MB
+                                Your File size Must be Maxmium 999MB
                             </div>
                         </div>
                         
                          <!-- Notification -->
 
-                        <!-- <a href="#" class="header-links-item">
+                        <!--<a href="#" class="header-links-item">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none"><path d="M12 22a2.02 2.02 0 0 1-2.01-2h4a2.02 2.02 0 0 1-.15.78a2.042 2.042 0 0 1-1.44 1.18h-.047A1.922 1.922 0 0 1 12 22zm8-3H4v-2l2-1v-5.5a8.065 8.065 0 0 1 .924-4.06A4.654 4.654 0 0 1 10 4.18V2h4v2.18c2.579.614 4 2.858 4 6.32V16l2 1v2z" fill="currentColor"/></g></svg>
                         </a>
                         <div uk-drop="mode: click;offset: 4" class="header_dropdown">
@@ -142,13 +144,13 @@
                                 
                             </ul>
                             <a href="#" class="see-all">See all</a>
-                        </div> -->
+                        </div>-->
 
                         <!-- Messages -->
 
                         <!-- <a href="#" class="header-links-item">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><g fill="currentColor"><path d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/></g></svg>
-                        </a>
+                        </a> -->
                         <div uk-drop="mode: click;offset: 4" class="header_dropdown">
                             <h4
                                 class="-mt-5 -mx-5 bg-gradient-to-t from-gray-100 to-gray-50 border-b font-bold px-6 py-3">
@@ -156,7 +158,7 @@
                             <ul class="dropdown_scrollbar" data-simplebar>
                                 <li>
                                     <a href="#">
-                                        <div class="drop_avatar"> <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="">
+                                        <div class="drop_avatar"> <img src="{{user_object.profile_img.url}}" alt="">
                                         </div>
                                         <div class="drop_content">
                                             <strong> Taiye </strong> <time> 6:43 PM</time>
@@ -165,151 +167,199 @@
                                     </a>
                                 </li>
                                 
+
+
                             </ul>
                             <a href="#" class="see-all">See all</a>
-                        </div> -->
+                        </div>
 
                         <!-- profile -->
 
                         <a href="#">
-                            <img src="{{user_profile.profile_img.url}}" class="header-avatar" alt="">
+                            <img src=" {{user_profile.profile_img.url}}" class="header-avatar" alt="">
                         </a>
                         <div uk-drop="mode: click;offset:9" class="header_dropdown profile_dropdown border-t">
                             <ul>
                                 <li><a href="/settings"> Account setting </a> </li>
-                                <li><a href="logout"> Log Out</a></li>
+                                <!-- <li><a href="explore.html">explore </a> </li> -->
+                                <li><a href="/logout"> Log Out</a></li>
                             </ul>
                         </div>
 
                     </div>
                 </div>
             </header>
+            </form>
+            
+            <div style="margin-left: 250px; margin-right: 250px;">
+                
+                <style>
+                body{margin-top:20px;
+                background-color: #eee;
+                }
 
-            <div class="container m-auto">
+                .search-result-categories>li>a {
+                    color: #b6b6b6;
+                    font-weight: 400
+                }
 
-                <!--<h1 class="lg:text-2xl text-lg font-extrabold leading-none text-gray-900 tracking-tight mb-5"> Feed </h1>--->
+                .search-result-categories>li>a:hover {
+                    background-color: #ddd;
+                    color: #555
+                }
 
-                <div class="lg:flex justify-center lg:space-x-10 lg:space-y-0 space-y-5">
+                .search-result-categories>li>a>.glyphicon {
+                    margin-right: 5px
+                }
 
-                    <!-- left sidebar-->
-                    <div class="space-y-5 flex-shrink-0 lg:w-7/12">
+                .search-result-categories>li>a>.badge {
+                    float: right
+                }
 
-                        <!-- post 1-->
+                .search-results-count {
+                    margin-top: 10px
+                }
 
-                        {% for post in posts reversed %}
-                        <div class="bg-white shadow rounded-md  -mx-2 lg:mx-0">
-    
-                            <!-- post header-->
-                            <div class="flex justify-between items-center px-4 py-3">
-                                <div class="flex flex-1 items-center space-x-4">
-                                  
-                                    <span class="block font-semibold "><a href="/profile/{{post.user}}">@{{post.user}}</a></span>
-                                </div>
-                              <div>
-                                <a href="#"> <i class="icon-feather-more-horizontal text-2xl hover:bg-gray-200 rounded-full p-2 transition -mr-1 "></i> </a>
-                                <div class="bg-white w-56 shadow-md mx-auto p-2 mt-12 rounded-md text-gray-500 hidden text-base border border-gray-100  " uk-drop="mode: hover;pos: top-right">
-                              
-                                    <ul class="space-y-1">
-                                      
-                                      <li> 
-                                          <a href="#" class="flex items-center px-3 py-2 text-red-500 hover:bg-red-100 hover:text-red-500 rounded-md ">
-                                           <i class="uil-trash-alt mr-1"></i>  Delete Post
-                                          </a> 
-                                      </li>
-                                    </ul>
-                                
-                                </div>
-                              </div>
-                            </div>
-    
-                            <div uk-lightbox>
-                                <a href="{{post.image.url}}">  
-                                    <img src="{{post.image.url}}" alt="">
-                                </a>
-                            </div>
-                            
-    
-                            <div class="py-3 px-4 space-y-3"> 
-                               
-                                <div class="flex space-x-4 lg:font-bold">
-                                    <a href="/like-post?post_id={{post.id}}" class="flex items-center space-x-2">
-                                        <div class="p-2 rounded-full text-black">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="25" height="25" class="">
-                                                <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-                                            </svg>
-                                            {% if post.number_of_likes == 0 %}
-                                            <p>No likes</p>
-                                            {% elif post.number_of_likes == 1 %}
-                                            <p>Liked by {{post.number_of_likes}} person</p>
-                                            {% else %}
-                                            <p>Liked by {post.number_of_likes}} people</p>
-                                            {% endif %}
-                                        </div>
-                                        
-                                    </a>
-                                   
-                                    <a href="{{post.image.url}}" class="flex items-center space-x-2 flex-1 justify-end" download>
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="25" height="25" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><g fill="currentColor"><path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v6h-2a.5.5 0 0 0-.354.854l2.5 2.5a.5.5 0 0 0 .708 0l2.5-2.5A.5.5 0 0 0 10.5 7.5h-2v-6z"/></g></svg>
-                                        
-                                    </a>
-                                </div>
-                            
+                .search-result-item {
+                    padding: 20px;
+                    background-color: #fff;
+                    border-radius: 4px
+                }
 
-                                <p>
-                                    <a href="/profile/{{post.user}}"><strong>{{post.user}}</strong></a> {{post.caption}}
-                                </p>
+                .search-result-item:after,
+                .search-result-item:before {
+                    content: " ";
+                    display: table
+                }
 
-                               
-    
-                            </div>
-    
-                        </div>
-                        {% endfor %}
-    
+                .search-result-item:after {
+                    clear: both
+                }
+
+                .search-result-item .image-link {
+                    display: block;
+                    overflow: hidden;
+                    border-top-left-radius: 4px;
+                    border-bottom-left-radius: 4px
+                }
+
+                @media (min-width:768px) {
+                    .search-result-item .image-link {
+                        display: inline-block;
+                        margin: -20px 0 -20px -20px;
+                        float: left;
+                        width: 200px
+                    }
+                }
+
+                @media (max-width:767px) {
+                    .search-result-item .image-link {
+                        max-height: 200px
+                    }
+                }
+
+                .search-result-item .image {
+                    max-width: 100%
+                }
+
+                .search-result-item .info {
+                    margin-top: 2px;
+                    font-size: 12px;
+                    color: #999
+                }
+
+                .search-result-item .description {
+                    font-size: 13px
+                }
+
+                .search-result-item+.search-result-item {
+                    margin-top: 20px
+                }
+
+                @media (min-width:768px) {
+                    .search-result-item-body {
+                        margin-left: 200px
+                    }
+                }
+
+                .search-result-item-heading {
+                    font-weight: 400
+                }
+
+                .search-result-item-heading>a {
+                    color: #555
+                }
+
+                @media (min-width:768px) {
+                    .search-result-item-heading {
+                        margin: 0
+                    }
+                }
+                </style>
+
+                <div class="container">
+                <div class="row ng-scope">
+                    <div class="col-md-3 col-md-push-9">
+                        <h4>Results For <span class="fw-semi-bold"><b>{{username}}</b></span></h4>
+                        <br>
+                        <!-- <p class="text-muted fs-mini">Listed content is categorized by the following groups:</p> -->
+                        <!-- <ul class="nav nav-pills nav-stacked search-result-categories mt">
+                            <li><a href="#">Friends <span class="badge">34</span></a>
+                            </li>
+                            <li><a href="#">Pages <span class="badge">9</span></a>
+                            </li>
+                            <li><a href="#">Images</a>
+                            </li>
+                            <li><a href="#">Groups</a>
+                            </li>
+                            <li><a href="#">Globals <span class="badge">18</span></a>
+                            </li>
+                        </ul> -->
+                    </div>
+                    <div class="col-md-9 col-md-pull-3">
+                        <!-- <p class="search-results-count">About 94 700 000 (0.39 sec.) results</p> -->
                         
-
-
-                    </div>
-
-                    <!-- right sidebar-->
-                    <div class="lg:w-5/12">
-
-                        <div class="bg-white  shadow-md rounded-md overflow-hidden">
-
-                            <div class="bg-gray-50  border-b border-gray-100 flex items-baseline justify-between py-4 px-6 ">
-                                <h2 class="font-semibold text-lg">Users You Can Follow</h2>
-                                <!-- <a href="#"> Refresh</a> -->
-                            </div>
-                           
-                            <div class="divide-gray-300 divide-gray-50 divide-opacity-50 divide-y px-4 ">
-
-                                {% for suggestion in suggestions_username_profile_list %}
-                                <div class="flex items-center justify-between py-3">
-                                    <div class="flex flex-1 items-center space-x-4">
-                                        <a href="/profile/{{suggestion.user}}">
-                                            <img src="{{suggestion.profileimg.url}}" class="bg-gray-200 rounded-full w-10 h-10">
-                                        </a>
-                                        <div class="flex flex-col">
-                                            <span class="block capitalize font-semibold"> {{suggestion.user}} </span>
-                                            <span class="block capitalize text-sm"> {{suggestion.bio}} </span>
-                                        </div>
+                        {% for users in username_profile_list %}
+                        <section class="search-result-item">
+                            <a class="image-link" href="/profile/{{users.user}}"><img class="image" src="{{users.profileimg.url}}">
+                            </a>
+                            <div class="search-result-item-body">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <h4 class="search-result-item-heading"><a href="/profile/{{users.user}}"><b>@{{users.user}}</b></a></h4>
+                                        <p class="info">{{users.location}}</p>
+                                        <p class="description">{{users.bio}}</p>
                                     </div>
-                                    
-                                    <a href="/profile/{{suggestion.user}}" class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 "> View User </a>
+                                    <!-- <div class="col-sm-3 text-align-center">
+                                        <p class="value3 mt-sm">$9, 700</p>
+                                        <p class="fs-mini text-muted">PER WEEK</p><a class="btn btn-primary btn-info btn-sm" href="#">Learn More</a>
+                                    </div> -->
                                 </div>
-                                {% endfor %}
-
                             </div>
-
-                        </div>
-
-                      
-
+                        </section>
+                        {% endfor %}
+                        
+                        <!-- <div class="text-align-center">
+                            <ul class="pagination pagination-sm">
+                                <li class="disabled"><a href="#">Prev</a>
+                                </li>
+                                <li class="active"><a href="#">1</a>
+                                </li>
+                                <li><a href="#">2</a>
+                                </li>
+                                <li><a href="#">3</a>
+                                </li>
+                                <li><a href="#">4</a>
+                                </li>
+                                <li><a href="#">5</a>
+                                </li>
+                                <li><a href="#">Next</a>
+                                </li>
+                            </ul>
+                        </div> -->
                     </div>
-
-                </div>               
-          
-
+                </div>
+                </div>
             </div>
 
         </div>
