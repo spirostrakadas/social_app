@@ -29,29 +29,32 @@ def index(request):
     feed_list=list(chain(*feed))
 
     #USER SUGGESTION START!
-    all_users=User.objects.all()
-    user_following_all=[]
+    all_users = User.objects.all()
+    user_following_all = []
 
     for user in user_following:
-        user_list=User.objects.get(username=user.user)
+        user_list = User.objects.get(username=user.user)
         user_following_all.append(user_list)
-    new_suggestion_list=[x for x in list(all_users) if(x not in list(user_following_all))]
-    current_user=User.objects.filter(username=request.user.username)
-    final_suggestion_list=[x for x in list(new_suggestion_list) if(x not in list(current_user))]
-    random.shuffle(final_suggestion_list)
+    
+    new_suggestions_list = [x for x in list(all_users) if (x not in list(user_following_all))]
+    current_user = User.objects.filter(username=request.user.username)
+    final_suggestions_list = [x for x in list(new_suggestions_list) if ( x not in list(current_user))]
+    random.shuffle(final_suggestions_list)
 
-    username_profile=[]
-    username_profile_list=[]
+    username_profile = []
+    username_profile_list = []
 
-    for users in final_suggestion_list:
+    for users in final_suggestions_list:
         username_profile.append(users.id)
+
     for ids in username_profile:
-        profile_lists=Profile.objects.filter(id_user=ids)
+        profile_lists = Profile.objects.filter(id_user=ids)
         username_profile_list.append(profile_lists)
-    suggestions_username_profile_lists=list(chain(*user_following_list))
+
+    suggestions_username_profile_list = list(chain(*username_profile_list))
 
 
-    return  render(request,'index.html',{'user_profile':user_profile,"post":post,'posts':posts,'feed_list':feed_list,"suggestions_username_profile_lists":suggestions_username_profile_lists})
+    return  render(request,'index.html',{'user_profile':user_profile,"post":post,'posts':posts,'feed_list':feed_list,"suggestions_username_profile_list":suggestions_username_profile_list})
 
 
 def search(request):
