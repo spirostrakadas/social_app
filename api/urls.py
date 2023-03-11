@@ -6,5 +6,6 @@ urlpatterns = [
     path('profiles/',views.getProfiles),
     path('posts/',views.getPosts),
     path('profiles/<str:pk>/',views.getProfile),
+    path('posts/<str:pk>/',views.getPost)
 
 ]

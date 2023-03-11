@@ -38,3 +38,9 @@ def getProfile(request,pk):
     profile=Profile.objects.get(id=pk)
     serializer=serializer=ProfileSerializer(profile,many=False)
     return Response(serializer.data) 
+
+@api_view(['GET'])
+def getPost(request,pk):
+    post=Post.objects.get(id=pk)
+    serializer=PostSerializer(post,many=False)
+    return Response(serializer.data)
